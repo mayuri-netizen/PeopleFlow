@@ -1,48 +1,16 @@
 import axios from 'axios';
 
-const baseURL = import.meta.env.PROD ? '/api' : 'http://localhost:5000/api';
-
-console.log('API Base URL:', baseURL);
+// For Render deployment
+const baseURL = process.env.NODE_ENV === 'production'
+    ? '/api'  // Same domain in production
+    : 'http://localhost:5000/api'; // Local development
 
 const api = axios.create({
     baseURL: baseURL,
     timeout: 30000,
 });
 
-api.interceptors.request.use(
-    (config) => {
-        console.log('Making API request to:', config.baseURL + config.url);
-
-        if (config.data instanceof FormData) {
-            delete config.headers['Content-Type'];
-        } else {
-            config.headers['Content-Type'] = 'application/json';
-        }
-        return config;
-    },
-    (error) => {
-        console.error('Request error:', error);
-        return Promise.reject(error);
-    }
-);
-
-api.interceptors.response.use(
-    (response) => {
-        console.log('API response received:', response.status, response.config.url);
-        return response;
-    },
-    (error) => {
-        console.error('API Error Details:', {
-            status: error.response?.status,
-            statusText: error.response?.statusText,
-            data: error.response?.data,
-            url: error.config?.url,
-            method: error.config?.method
-        });
-        return Promise.reject(error);
-    }
-);
-
+// Rest of your api.js code remains the same...
 export const getUsers = async (page = 1, limit = 10, search = '') => {
     try {
         const response = await api.get('/users', {
@@ -55,16 +23,13 @@ export const getUsers = async (page = 1, limit = 10, search = '') => {
     }
 };
 
+// ... rest of your existing functions
 export const getUserById = async (id) => {
     try {
-        console.log('Fetching user by ID:', id);
-
         if (!id) {
             throw new Error('User ID is required');
         }
-
         const response = await api.get(`/users/${id}`);
-        console.log('getUserById response:', response.data);
         return response.data;
     } catch (error) {
         console.error('getUserById error for ID:', id, error);
@@ -84,12 +49,9 @@ export const createUser = async (userData) => {
 
 export const updateUser = async (id, userData) => {
     try {
-        console.log('Updating user:', id, userData);
-
         if (!id) {
             throw new Error('User ID is required');
         }
-
         const response = await api.put(`/users/${id}`, userData);
         return response.data;
     } catch (error) {
@@ -103,7 +65,6 @@ export const deleteUser = async (id) => {
         if (!id) {
             throw new Error('User ID is required');
         }
-
         const response = await api.delete(`/users/${id}`);
         return response.data;
     } catch (error) {
