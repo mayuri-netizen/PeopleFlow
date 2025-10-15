@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getUserById } from '../services/api';
 import { toast } from 'react-toastify';
-// We are removing FaUserCircle, but keeping the others
 import { FaEnvelope, FaMobileAlt, FaMapMarkerAlt, FaVenusMars } from 'react-icons/fa';
 import './UserDetailsPage.css';
 
@@ -45,8 +44,7 @@ const UserDetailsPage = () => {
     return (
         <div className="details-container">
             <div className="details-header">
-                {/* === THIS IS THE MAIN CHANGE === */}
-                {/* Instead of an icon, we now use an img tag with the user's profile URL */}
+
                 <img
                     src={user.profile}
                     alt={`${user.firstName} ${user.lastName}`}

@@ -19,7 +19,7 @@ const ConfirmModal = ({ isOpen, onClose, onConfirm, message }) => {
                 </div>
             </div>
         </div>,
-        document.body // Portal to the body to avoid stacking issues
+        document.body
     );
 };
 

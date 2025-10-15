@@ -7,7 +7,7 @@ const Header = () => {
         <header className="app-header">
             <div className="header-content">
                 <NavLink to="/" className="logo-link">
-                    {/* Replace the text with an image tag for your new logo */}
+
                     <img src="/logo.png" alt="PeopleFlow Logo" className="logo-img" />
                 </NavLink>
             </div>

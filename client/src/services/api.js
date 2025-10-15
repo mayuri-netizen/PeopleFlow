@@ -1,31 +1,35 @@
 import axios from 'axios';
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
-// Create an Axios instance with a base URL.
-// This is better than repeating the URL everywhere.
 const api = axios.create({
-    baseURL: 'http://localhost:5000/api', // Our backend server URL
+    baseURL: `${API_URL}/api`,
 });
 
-// Function to get users, with support for pagination and search
-export const getUsers = async (page = 1, limit = 10, search = '') => {
-    try {
-        const response = await api.get('/users', {
-            params: { page, limit, search },
-        });
-        return response.data;
-    } catch (error) {
-        // It's good practice to handle errors and re-throw them
-        // so the component can catch them.
-        console.error('Error fetching users:', error);
-        throw error;
+
+api.interceptors.request.use(config => {
+    if (config.data instanceof FormData) {
+
+    } else {
+
+        config.headers['Content-Type'] = 'application/json';
     }
+    return config;
+});
+
+export const getUsers = (page = 1, limit = 10, search = '') => {
+    return api.get('/users', {
+        params: { page, limit, search }
+    });
 };
 
-// We can add the other API functions here as we need them
 export const getUserById = (id) => api.get(`/users/${id}`);
 export const createUser = (userData) => api.post('/users', userData);
 export const updateUser = (id, userData) => api.put(`/users/${id}`, userData);
 export const deleteUser = (id) => api.delete(`/users/${id}`);
-export const exportUsersToCsv = () => api.get('/users/export', { responseType: 'blob' });
+
+export const exportUsersToCsv = async () => {
+    const response = await api.get('/users/export', { responseType: 'blob' });
+    return response.data;
+};
 
 export default api;

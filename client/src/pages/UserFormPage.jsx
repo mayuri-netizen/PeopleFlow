@@ -11,7 +11,7 @@ import './UserFormPage.css';
 const SUPPORTED_FORMATS = ['image/jpeg', 'image/png', 'image/gif'];
 const FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
-// UPDATED: Validation schema now correctly handles edit mode
+
 const schema = yup.object().shape({
     firstName: yup.string().required('First name is required'),
     lastName: yup.string().required('Last name is required'),
@@ -22,9 +22,9 @@ const schema = yup.object().shape({
     status: yup.string().oneOf(['Active', 'Inactive']).required('Status is required'),
     profile: yup.mixed()
         .test('required', 'Profile picture is required for new users', (value, context) => {
-            // THIS IS THE FIX: We get isEditMode from the context passed to useForm
+
             const { isEditMode } = context.options.context;
-            // The profile is only required if it's NOT in edit mode.
+
             return isEditMode || (value && value.length > 0);
         })
         .test('fileSize', 'The file is too large (max 5MB)', (value) =>
@@ -44,7 +44,7 @@ const UserFormPage = () => {
 
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
-        context: { isEditMode }, // Pass isEditMode to the validation context
+        context: { isEditMode },
         defaultValues: { status: 'Active' },
     });
 

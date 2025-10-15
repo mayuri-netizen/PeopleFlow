@@ -8,11 +8,11 @@ import {
     deleteUser,
     exportUsersToCsv,
 } from '../controllers/userController.js';
-import upload from '../middleware/multerMiddleware.js'; // <-- IMPORT UPLOAD MIDDLEWARE
+import upload from '../middleware/multerMiddleware.js';
 
 const router = express.Router();
 
-// UPDATED: Removed 'profile' validation from this chain, as it's a file now.
+
 const userValidationRules = [
     body('firstName').notEmpty().withMessage('First name is required'),
     body('lastName').notEmpty().withMessage('Last name is required'),
@@ -23,7 +23,7 @@ const userValidationRules = [
     body('status').isIn(['Active', 'Inactive']).withMessage('Status must be Active or Inactive'),
 ];
 
-// UPDATED: Added the upload middleware before validation and controller
+
 router.post('/', upload.single('profile'), userValidationRules, createUser);
 router.get('/', getUsers);
 router.get('/export', exportUsersToCsv);

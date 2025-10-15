@@ -3,7 +3,7 @@ import './Pagination.css';
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     if (totalPages <= 1) {
-        return null; // Don't render pagination if there's only one page
+        return null;
     }
 
     return (

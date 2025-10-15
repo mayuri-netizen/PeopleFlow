@@ -1,6 +1,5 @@
 .action-dropdown {
     position: static;
-    /* The container itself no longer needs relative positioning */
 }
 
 .dropdown-trigger {
@@ -12,20 +11,20 @@
     padding: 0.5rem;
 }
 
-/* The dropdown-menu is now positioned absolutely relative to the whole page */
+
 .dropdown-menu {
     position: absolute;
-    /* IMPORTANT */
+
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
-    /* High z-index to appear on top of everything */
+
     width: 120px;
-    /* Fixed width used for position calculation */
+
     animation: fadeIn 0.1s ease-in-out;
 
-    /* This makes the menu itself scrollable, as you requested */
+
     max-height: 200px;
     overflow-y: auto;
 }

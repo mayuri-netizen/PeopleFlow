@@ -21,7 +21,7 @@
 }
 
 .logo-img {
-    /* Increased base height for desktop view */
+
     height: 75px;
     display: block;
     transition: transform 0.3s ease;
@@ -31,15 +31,15 @@
     transform: scale(1.05);
 }
 
-/* NEW: Responsive styles for the logo */
+
 @media (max-width: 768px) {
     .app-header {
         padding: 0.75rem 1rem;
-        /* Adjust header padding on mobile */
+
     }
 
     .logo-img {
-        /* Slightly smaller height on mobile devices */
+
         height: 40px;
     }
 }

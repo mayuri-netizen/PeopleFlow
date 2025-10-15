@@ -32,7 +32,7 @@
 
     .skeleton-cell.profile {
         flex: 0 0 45px;
-        /* Fixed width */
+
         height: 45px;
         border-radius: 50%;
     }

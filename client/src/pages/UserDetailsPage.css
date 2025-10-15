@@ -29,16 +29,16 @@
     margin-bottom: 1.5rem;
 }
 
-/* === UPDATED STYLES FOR THE AVATAR IMAGE === */
+
 .avatar {
     width: 100px;
-    /* Set a fixed width */
+
     height: 100px;
-    /* Set a fixed height */
+
     border-radius: 50%;
-    /* Make it a circle */
+
     object-fit: cover;
-    /* Ensure the image covers the area without distortion */
+
     border: 3px solid #2a2a72;
 }
 

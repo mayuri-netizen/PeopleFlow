@@ -1,6 +1,5 @@
 import multer from 'multer';
 
-// Configure multer to use memory storage
 const storage = multer.memoryStorage();
 
 // File filter to accept only images

@@ -14,7 +14,7 @@ function App() {
     <>
       <Header />
       <main className="container">
-        {/* Using location.key to ensure re-render for animations */}
+
         <div key={location.key} className="page">
           <Routes>
             <Route path="/" element={<UserListPage />} />

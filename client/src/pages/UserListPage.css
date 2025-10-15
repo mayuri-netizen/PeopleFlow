@@ -1,4 +1,3 @@
-/* --- Message Styles --- */
 .error-message,
 .no-users-message {
     text-align: center;
@@ -13,7 +12,7 @@
     color: var(--error-color);
 }
 
-/* --- Header Styles --- */
+
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -84,14 +83,13 @@
 }
 
 
-/* --- Table Styles --- */
 .table-container {
     overflow-x: auto;
     background-color: var(--surface-color);
     border-radius: 12px;
     box-shadow: var(--shadow);
     overflow-y: visible;
-    /* Prevents dropdown clipping */
+
 }
 
 table {
@@ -148,7 +146,6 @@ tbody tr:hover {
     color: #721c24;
 }
 
-/* --- Responsive Styles --- */
 @media (max-width: 768px) {
     .page-header {
         flex-direction: column;

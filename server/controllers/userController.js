@@ -18,20 +18,19 @@ const uploadToCloudinary = (fileBuffer) => {
                 }
             }
         );
-        // Write the buffer to the stream to start the upload
+
         stream.end(fileBuffer);
     });
 };
 
-// @desc    Create a new user
-// @route   POST /api/users
+
 export const createUser = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    // After multer processes the upload, the file is available at req.file
+
     if (!req.file) {
         return res.status(400).json({ errors: [{ msg: 'Profile image is required.' }] });
     }
@@ -55,7 +54,7 @@ export const createUser = async (req, res) => {
             address,
             gender,
             status,
-            profile: result.secure_url, // Save the secure URL from Cloudinary
+            profile: result.secure_url,
         });
 
         await user.save();
@@ -66,8 +65,7 @@ export const createUser = async (req, res) => {
     }
 };
 
-// @desc    Get all users with search and pagination
-// @route   GET /api/users
+
 export const getUsers = async (req, res) => {
     try {
         const { search, page = 1, limit = 10 } = req.query;
@@ -97,8 +95,7 @@ export const getUsers = async (req, res) => {
     }
 };
 
-// @desc    Get a single user by ID
-// @route   GET /api/users/:id
+
 export const getUserById = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
@@ -115,8 +112,7 @@ export const getUserById = async (req, res) => {
     }
 };
 
-// @desc    Update a user
-// @route   PUT /api/users/:id
+
 export const updateUser = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -131,14 +127,14 @@ export const updateUser = async (req, res) => {
 
         const updateData = { ...req.body };
 
-        // If a new file is uploaded, update the profile picture
+
         if (req.file) {
             const result = await uploadToCloudinary(req.file.buffer);
             updateData.profile = result.secure_url;
 
-            // Optional but recommended: Delete the old image from Cloudinary to save space
+
             if (user.profile) {
-                // Extract the public_id from the old URL
+
                 const publicId = user.profile.split('/').pop().split('.')[0];
                 cloudinary.uploader.destroy(`user-profiles/${publicId}`);
             }
@@ -157,8 +153,7 @@ export const updateUser = async (req, res) => {
     }
 };
 
-// @desc    Delete a user
-// @route   DELETE /api/users/:id
+
 export const deleteUser = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
@@ -176,8 +171,7 @@ export const deleteUser = async (req, res) => {
     }
 };
 
-// @desc    Export users to CSV
-// @route   GET /api/users/export
+
 export const exportUsersToCsv = async (req, res) => {
     try {
         const users = await User.find({}).lean();
