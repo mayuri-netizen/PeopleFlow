@@ -146,6 +146,3 @@ GET
 Export all users to a CSV file
 
 This README.md file should be placed in the root directory of your project (the bits-and-volts-app folder). When you push your code to GitHub, this will automatically become the project's beautiful homepage.
-
-Next Steps: GitHub and Vercel
-You are now ready to put your code on GitHub and deploy it. I will guide you through those steps next.
