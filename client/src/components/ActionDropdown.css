@@ -1,0 +1,62 @@
+.action-dropdown {
+    position: static;
+    /* The container itself no longer needs relative positioning */
+}
+
+.dropdown-trigger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #555;
+    padding: 0.5rem;
+}
+
+/* The dropdown-menu is now positioned absolutely relative to the whole page */
+.dropdown-menu {
+    position: absolute;
+    /* IMPORTANT */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    /* High z-index to appear on top of everything */
+    width: 120px;
+    /* Fixed width used for position calculation */
+    animation: fadeIn 0.1s ease-in-out;
+
+    /* This makes the menu itself scrollable, as you requested */
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 0.95rem;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.dropdown-item.delete-action {
+    color: #dc3545;
+}

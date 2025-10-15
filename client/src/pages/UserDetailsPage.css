@@ -1,0 +1,88 @@
+.details-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.details-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1.5rem;
+}
+
+/* === UPDATED STYLES FOR THE AVATAR IMAGE === */
+.avatar {
+    width: 100px;
+    /* Set a fixed width */
+    height: 100px;
+    /* Set a fixed height */
+    border-radius: 50%;
+    /* Make it a circle */
+    object-fit: cover;
+    /* Ensure the image covers the area without distortion */
+    border: 3px solid #2a2a72;
+}
+
+.user-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.details-body {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.1rem;
+}
+
+.info-item .icon {
+    font-size: 1.5rem;
+    color: #2a2a72;
+}
+
+.info-item span {
+    color: #555;
+}
+
+.details-footer {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.back-button {
+    padding: 0.7rem 1.5rem;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+}

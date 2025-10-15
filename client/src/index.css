@@ -1,0 +1,57 @@
+    /* --- DESIGN SYSTEM & GLOBAL STYLES --- */
+
+    /* 1. CSS Variables for our Color Palette */
+    :root {
+      --primary-color: #4a4a8c;
+      /* A deep, professional blue-purple */
+      --primary-dark: #3a3a6c;
+      --secondary-color: #00c6ff;
+      /* A vibrant accent blue */
+      --background-color: #f7f7fc;
+      --surface-color: #ffffff;
+      --text-color: #333333;
+      --text-muted-color: #6c757d;
+      --border-color: #dee2e6;
+      --success-color: #28a745;
+      --error-color: #dc3545;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    /* 2. Global Resets & Font */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* 3. Global Container for consistent page width */
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    /* 4. Global Animation for Page Transitions */
+    .page {
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
