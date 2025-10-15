@@ -15,8 +15,9 @@ const UserDetailsPage = () => {
         const fetchUserData = async () => {
             try {
                 setLoading(true);
-                const { data } = await getUserById(id);
-                setUser(data);
+                const response = await getUserById(id);
+                const userData = response.data || response;
+                setUser(userData);
             } catch (err) {
                 setError('Could not find user. They may have been deleted.');
                 toast.error('Could not find user.');
@@ -30,50 +31,63 @@ const UserDetailsPage = () => {
     }, [id]);
 
     if (loading) {
-        return <div className="loading-message">Loading user details...</div>;
+        return <div className="loading-container">Loading user details...</div>;
     }
 
     if (error) {
-        return <div className="error-message">{error}</div>;
+        return <div className="error-container">{error}</div>;
     }
 
     if (!user) {
-        return <div className="loading-message">No user data to display.</div>;
+        return <div className="no-data-container">No user data to display.</div>;
     }
 
     return (
-        <div className="details-container">
-            <div className="details-header">
+        <div className="user-details-page">
+            <div className="details-container">
+                <div className="details-header">
+                    <img
+                        src={user.profile}
+                        alt={`${user.firstName} ${user.lastName}`}
+                        className="avatar"
+                    />
+                    <div className="user-name">
+                        {user.firstName} {user.lastName}
+                    </div>
+                </div>
 
-                <img
-                    src={user.profile}
-                    alt={`${user.firstName} ${user.lastName}`}
-                    className="avatar"
-                />
-                <h1 className="user-name">{user.firstName} {user.lastName}</h1>
-            </div>
+                <div className="details-body">
+                    <div className="info-item">
+                        <FaEnvelope className="icon" />
+                        <span>{user.email}</span>
+                    </div>
 
-            <div className="details-body">
-                <div className="info-item">
-                    <FaEnvelope className="icon" />
-                    <span>{user.email}</span>
-                </div>
-                <div className="info-item">
-                    <FaMobileAlt className="icon" />
-                    <span>{user.mobile}</span>
-                </div>
-                <div className="info-item">
-                    <FaMapMarkerAlt className="icon" />
-                    <span>{user.address}</span>
-                </div>
-                <div className="info-item">
-                    <FaVenusMars className="icon" />
-                    <span>{user.gender}</span>
-                </div>
-            </div>
+                    <div className="info-item">
+                        <FaMobileAlt className="icon" />
+                        <span>{user.mobile}</span>
+                    </div>
 
-            <div className="details-footer">
-                <Link to="/" className="back-button">Back to List</Link>
+                    <div className="info-item">
+                        <FaMapMarkerAlt className="icon" />
+                        <span>{user.address}</span>
+                    </div>
+
+                    <div className="info-item">
+                        <FaVenusMars className="icon" />
+                        <span>{user.gender}</span>
+                    </div>
+                </div>
+
+                <div className="details-footer">
+                    <div className="action-buttons">
+                        <Link to={`/edit/${user._id}`} className="action-btn edit-btn">
+                            Edit User
+                        </Link>
+                        <Link to="/" className="action-btn back-btn">
+                            Back to List
+                        </Link>
+                    </div>
+                </div>
             </div>
         </div>
     );

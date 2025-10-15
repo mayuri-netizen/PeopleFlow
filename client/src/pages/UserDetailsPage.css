@@ -1,3 +1,9 @@
+.user-details-page {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 .details-container {
     max-width: 700px;
     margin: 2rem auto;
@@ -22,35 +28,35 @@
 
 .details-header {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
     gap: 1.5rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid #eee;
     margin-bottom: 1.5rem;
 }
 
-
 .avatar {
-    width: 100px;
-
-    height: 100px;
-
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-
     object-fit: cover;
-
-    border: 3px solid #2a2a72;
+    border: 4px solid #2a2a72;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .user-name {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: bold;
     color: #333;
+    margin: 0;
 }
 
 .details-body {
     display: grid;
     gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .info-item {
@@ -58,31 +64,117 @@
     align-items: center;
     gap: 1rem;
     font-size: 1.1rem;
+    padding: 0.8rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #2a2a72;
 }
 
 .info-item .icon {
     font-size: 1.5rem;
     color: #2a2a72;
+    min-width: 24px;
 }
 
 .info-item span {
     color: #555;
+    font-weight: 500;
 }
 
 .details-footer {
-    margin-top: 2rem;
     text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
 }
 
-.back-button {
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+
+.action-btn {
     padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+}
+
+.edit-btn {
+    background-image: linear-gradient(to right, #4a4a8c 0%, #2a2a72 100%);
+    color: white;
+}
+
+.back-btn {
     background-color: #6c757d;
     color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
 }
 
-.back-button:hover {
+.back-btn:hover {
     background-color: #5a6268;
+}
+
+.loading-container,
+.error-container,
+.no-data-container {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin: 2rem auto;
+    max-width: 500px;
+}
+
+.error-container {
+    color: #dc3545;
+    border-left: 4px solid #dc3545;
+}
+
+@media (max-width: 768px) {
+    .details-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .user-name {
+        font-size: 1.8rem;
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .info-item {
+        font-size: 1rem;
+    }
 }

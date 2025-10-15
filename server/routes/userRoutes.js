@@ -12,7 +12,6 @@ import upload from '../middleware/multerMiddleware.js';
 
 const router = express.Router();
 
-
 const userValidationRules = [
     body('firstName').notEmpty().withMessage('First name is required'),
     body('lastName').notEmpty().withMessage('Last name is required'),
@@ -23,12 +22,24 @@ const userValidationRules = [
     body('status').isIn(['Active', 'Inactive']).withMessage('Status must be Active or Inactive'),
 ];
 
+// Test route
+router.get('/test', (req, res) => {
+    res.json({ message: 'User routes are working!' });
+});
 
+// IMPORTANT: Order matters! More specific routes MUST come before general ones
+router.get('/export', exportUsersToCsv);  // Must come before /:id
 router.post('/', upload.single('profile'), userValidationRules, createUser);
 router.get('/', getUsers);
-router.get('/export', exportUsersToCsv);
-router.get('/:id', getUserById);
+router.get('/:id', getUserById);  // This should come after /export
 router.put('/:id', upload.single('profile'), userValidationRules, updateUser);
 router.delete('/:id', deleteUser);
+
+// Debug middleware to log all requests
+router.use('*', (req, res, next) => {
+    console.log(`Route hit: ${req.method} ${req.originalUrl}`);
+    console.log('Params:', req.params);
+    next();
+});
 
 export default router;

@@ -11,7 +11,6 @@ import './UserFormPage.css';
 const SUPPORTED_FORMATS = ['image/jpeg', 'image/png', 'image/gif'];
 const FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
-
 const schema = yup.object().shape({
     firstName: yup.string().required('First name is required'),
     lastName: yup.string().required('Last name is required'),
@@ -22,9 +21,7 @@ const schema = yup.object().shape({
     status: yup.string().oneOf(['Active', 'Inactive']).required('Status is required'),
     profile: yup.mixed()
         .test('required', 'Profile picture is required for new users', (value, context) => {
-
             const { isEditMode } = context.options.context;
-
             return isEditMode || (value && value.length > 0);
         })
         .test('fileSize', 'The file is too large (max 5MB)', (value) =>
@@ -64,17 +61,24 @@ const UserFormPage = () => {
             setIsLoading(true);
             const fetchUserData = async () => {
                 try {
-                    const { data } = await getUserById(id);
-                    setValue('firstName', data.firstName);
-                    setValue('lastName', data.lastName);
-                    setValue('email', data.email);
-                    setValue('mobile', data.mobile);
-                    setValue('address', data.address);
-                    setValue('gender', data.gender);
-                    setValue('status', data.status);
-                    setProfilePreview(data.profile);
-                } catch (error) { toast.error('Failed to fetch user data.'); }
-                finally { setIsLoading(false); }
+
+                    const response = await getUserById(id);
+                    const userData = response.data || response;
+
+                    setValue('firstName', userData.firstName);
+                    setValue('lastName', userData.lastName);
+                    setValue('email', userData.email);
+                    setValue('mobile', userData.mobile);
+                    setValue('address', userData.address);
+                    setValue('gender', userData.gender);
+                    setValue('status', userData.status);
+                    setProfilePreview(userData.profile);
+
+                } catch (error) {
+                    toast.error('Failed to fetch user data.');
+                } finally {
+                    setIsLoading(false);
+                }
             };
             fetchUserData();
         }
@@ -111,93 +115,114 @@ const UserFormPage = () => {
     };
 
     if (isLoading && isEditMode) {
-        return <div className="loading-message">Loading form...</div>;
+        return <div className="loading-form">Loading form...</div>;
     }
 
     return (
-        <div className="form-container">
-            <h1>{isEditMode ? 'Edit User' : 'Register Your Details'}</h1>
-            <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                <div className="form-group">
-                    <label>Select Your Profile</label>
-                    <div className="profile-uploader">
+        <div className="user-form-page">
+            <div className="form-container">
+                <h2 className="form-title">
+                    {isEditMode ? 'Edit User' : 'Register Your Details'}
+                </h2>
+
+                <form onSubmit={handleSubmit(onSubmit)} className="user-form">
+                    <div className="profile-section">
+                        <label className="profile-label">Select Your Profile</label>
+
                         {profilePreview ? (
                             <img src={profilePreview} alt="Profile Preview" className="profile-preview" />
                         ) : (
-                            <div className="profile-preview">
-                                <FaUserCircle />
+                            <div className="profile-placeholder">
+                                <FaUserCircle className="placeholder-icon" />
                             </div>
                         )}
-                        <label htmlFor="profile" className="upload-label">Choose Image</label>
-                        <input type="file" id="profile" accept="image/*" {...register('profile')} />
-                    </div>
-                    {errors.profile && <p className="error-text">{errors.profile.message}</p>}
-                </div>
 
-                <div className="form-row">
-                    <div className="form-group half-width">
-                        <label htmlFor="firstName">First Name</label>
-                        <input type="text" id="firstName" placeholder="Enter FirstName" {...register('firstName')} />
-                        {errors.firstName && <p className="error-text">{errors.firstName.message}</p>}
+                        <input
+                            type="file"
+                            id="profile-input"
+                            {...register('profile')}
+                            accept="image/*"
+                            className="file-input"
+                        />
+                        <label htmlFor="profile-input" className="file-label">Choose Image</label>
+
+                        {errors.profile && <div className="error-message">{errors.profile.message}</div>}
                     </div>
-                    <div className="form-group half-width">
-                        <label htmlFor="lastName">Last Name</label>
-                        <input type="text" id="lastName" placeholder="Enter LastName" {...register('lastName')} />
-                        {errors.lastName && <p className="error-text">{errors.lastName.message}</p>}
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input type="email" id="email" placeholder="Enter Email" {...register('email')} />
-                    {errors.email && <p className="error-text">{errors.email.message}</p>}
-                </div>
-                <div className="form-group">
-                    <label htmlFor="mobile">Mobile Number</label>
-                    <input type="tel" id="mobile" placeholder="Enter Mobile" {...register('mobile')} />
-                    {errors.mobile && <p className="error-text">{errors.mobile.message}</p>}
-                </div>
-                <div className="form-row">
-                    <div className="form-group half-width">
-                        <label>Select Your Gender</label>
-                        <div className="gender-group">
-                            <div className="gender-option">
-                                <input type="radio" id="male" value="Male" {...register('gender')} />
-                                <label htmlFor="male">Male</label>
-                            </div>
-                            <div className="gender-option">
-                                <input type="radio" id="female" value="Female" {...register('gender')} />
-                                <label htmlFor="female">Female</label>
-                            </div>
+
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>First Name</label>
+                            <input type="text" {...register('firstName')} />
+                            {errors.firstName && <div className="error-message">{errors.firstName.message}</div>}
                         </div>
-                        {errors.gender && <p className="error-text">{errors.gender.message}</p>}
-                    </div>
-                    <div className="form-group half-width">
-                        <label htmlFor="status">Select Your Status</label>
-                        <select id="status" {...register('status')}>
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                        </select>
-                        {errors.status && <p className="error-text">{errors.status.message}</p>}
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="address">Enter Your Location</label>
-                    <input type="text" id="address" placeholder="Enter Your Location" {...register('address')} />
-                    {errors.address && <p className="error-text">{errors.address.message}</p>}
-                </div>
 
-                <div className="form-actions">
-                    <button type="button" className="back-btn" onClick={() => navigate(-1)}>
-                        Back
-                    </button>
-                    <button type="submit" className="submit-btn" disabled={isLoading}>
-                        {isLoading ? 'Submitting...' : (isEditMode ? 'Update User' : 'Submit')}
-                    </button>
-                </div>
-            </form>
+                        <div className="form-group">
+                            <label>Last Name</label>
+                            <input type="text" {...register('lastName')} />
+                            {errors.lastName && <div className="error-message">{errors.lastName.message}</div>}
+                        </div>
+                    </div>
+
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Email</label>
+                            <input type="email" {...register('email')} />
+                            {errors.email && <div className="error-message">{errors.email.message}</div>}
+                        </div>
+
+                        <div className="form-group">
+                            <label>Mobile Number</label>
+                            <input type="tel" {...register('mobile')} />
+                            {errors.mobile && <div className="error-message">{errors.mobile.message}</div>}
+                        </div>
+                    </div>
+
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Select Your Gender</label>
+                            <div className="radio-group">
+                                <label className="radio-label">
+                                    <input type="radio" value="Male" {...register('gender')} />
+                                    Male
+                                </label>
+                                <label className="radio-label">
+                                    <input type="radio" value="Female" {...register('gender')} />
+                                    Female
+                                </label>
+                            </div>
+                            {errors.gender && <div className="error-message">{errors.gender.message}</div>}
+                        </div>
+
+                        <div className="form-group">
+                            <label>Select Your Status</label>
+                            <select {...register('status')}>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                            {errors.status && <div className="error-message">{errors.status.message}</div>}
+                        </div>
+                    </div>
+
+                    <div className="form-group full-width">
+                        <label>Enter Your Location</label>
+                        <textarea {...register('address')} rows="3"></textarea>
+                        {errors.address && <div className="error-message">{errors.address.message}</div>}
+                    </div>
+
+                    <div className="form-actions">
+                        {isEditMode && (
+                            <button type="button" onClick={() => navigate('/')} className="btn btn-secondary">
+                                Back
+                            </button>
+                        )}
+                        <button type="submit" disabled={isLoading} className="btn btn-primary">
+                            {isLoading ? 'Submitting...' : (isEditMode ? 'Update User' : 'Submit')}
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };
 
 export default UserFormPage;
-

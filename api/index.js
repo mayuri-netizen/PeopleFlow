@@ -1,0 +1,1 @@
+export { default } from '../server/index.js';// This file helps Vercel recognize the API routes
