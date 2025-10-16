@@ -1,13 +1,17 @@
 import axios from 'axios';
 
-// For local development, this points to your local server.
-// For the LIVE DEPLOYMENT, this variable MUST be set in Vercel's Environment Variables.
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+// --- FINAL FIX ---
+// We are now hardcoding the live URL of your deployed backend.
+// This bypasses any issues with Vercel's environment variables.
+// **IMPORTANT**: Replace the URL below with your actual Render URL if it's different.
+const API_BASE_URL = 'https://peopleflow-api.onrender.com';
 
 const api = axios.create({
     // The full base URL for all API calls is constructed here
     baseURL: `${API_BASE_URL}/api/users`,
 });
+
+// The rest of the functions do not need to change.
 
 export const getUsers = async (page = 1, limit = 10, search = '') => {
     try {
