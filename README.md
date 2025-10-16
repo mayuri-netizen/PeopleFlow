@@ -2,12 +2,10 @@
 
 PeopleFlow is a complete, full-stack web application designed for managing user data. It features a modern, responsive UI, cloud-based image uploads, server-side search and pagination, and a full suite of CRUD functionalities, making it a comprehensive solution for user administration.
 
-**Live Application:** [https://peopleflow-your-project.vercel.app/](https://peopleflow-your-project.vercel.app/)
-*(Note: Please replace the link above with your actual Vercel deployment URL.)*
+**Live Application:** https://people-flow-sigma.vercel.app/
 
 ---
-![PeopleFlow Screenshot](https://i.imgur.com/your-screenshot-url.png) 
-*(It is highly recommended to take a screenshot of your finished application, upload it to a site like [Imgur](https://imgur.com/), and paste the link here.)*
+<img width="500" height="500" alt="Screenshot 2025-10-16 111946" src="https://github.com/user-attachments/assets/10189e33-b276-4be5-8c4c-d92e4aaa6944" />
 
 ---
 
@@ -32,7 +30,9 @@ PeopleFlow is a complete, full-stack web application designed for managing user 
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB (with Mongoose)
 - **Image Management**: Cloudinary (for cloud storage), Multer (for file handling)
-- **Deployment**: Vercel (for both frontend and backend as a monorepo)
+- **Deployment**:
+    - **Frontend:** Vercel
+    - **Backend:** Render
 
 ---
 
@@ -100,15 +100,14 @@ To run this application locally, you will need to set up both the backend server
     ```bash
     npm run dev
     ```
-    The frontend will be available at `http://localhost:5173` and is configured to communicate with your local backend server.
+    The frontend will be available at `http://localhost:5173`.
 
 ---
 
 ## **Deployment**
 
-This application is deployed on **Vercel** as a monorepo.
+This application is deployed using a split-deployment strategy, which is a standard practice for MERN applications.
 
-- Vercel is configured to recognize the project as a monorepo, with separate projects for the `client` and `server` root directories.
-- The **backend (`server`)** is deployed as a Vercel Function. All necessary environment variables (`MONGO_URI`, Cloudinary keys) are configured in the Vercel project settings.
-- The **frontend (`client`)** is deployed as a static Vite site. An environment variable named `VITE_API_BASE_URL` is configured in the Vercel project settings with the URL of the live Vercel backend.
-- **Continuous Deployment** is enabled. Any `git push` to the `main` branch automatically triggers new deployments for both the frontend and backend.
+- The **backend** (`server`) is deployed as a "Web Service" on Render. The `Root Directory` is set to `server`, and all necessary environment variables (`MONGO_URI`, Cloudinary keys) are configured in the Render dashboard.
+- The **frontend** (`client`) is deployed on Vercel. The `Root Directory` is set to `client`. An environment variable named `VITE_API_BASE_URL` is configured in the Vercel project settings with the URL of the live Render backend.
+- **Continuous Deployment** is enabled on both platforms. Any `git push` to the `main` branch will automatically trigger new deployments on both Render and Vercel.
