@@ -1,14 +1,11 @@
 import axios from 'axios';
 
-// This logic automatically determines the correct backend URL.
-// On your computer, it uses http://localhost:5000.
-// On Vercel, it uses the same domain as the frontend (e.g., /api/users).
-const baseURL = import.meta.env.PROD
-    ? '/api/users'
-    : 'http://localhost:5000/api/users';
+// This logic now correctly uses the environment variable for the live site.
+const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
 const api = axios.create({
-    baseURL: baseURL,
+    // The '/api/users' part is now added here, making the base URL cleaner.
+    baseURL: `${baseURL}/api/users`,
 });
 
 export const getUsers = async (page = 1, limit = 10, search = '') => {
@@ -74,4 +71,3 @@ export const exportUsersToCsv = async () => {
         throw error;
     }
 };
-
