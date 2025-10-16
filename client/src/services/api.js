@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-// This logic now correctly uses the environment variable for the live site.
-const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+// For local development, this points to your local server.
+// For the LIVE DEPLOYMENT, this variable MUST be set in Vercel's Environment Variables.
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
 const api = axios.create({
-    // The '/api/users' part is now added here, making the base URL cleaner.
-    baseURL: `${baseURL}/api/users`,
+    // The full base URL for all API calls is constructed here
+    baseURL: `${API_BASE_URL}/api/users`,
 });
 
 export const getUsers = async (page = 1, limit = 10, search = '') => {
